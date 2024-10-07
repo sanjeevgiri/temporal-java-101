@@ -62,3 +62,6 @@ Alternatively, you can follow
 [these instructions](https://learn.temporal.io/getting_started/java/dev_environment/) to
 set up your own Temporal Cluster with Temporal CLI, which you can use as an
 exercise environment.
+
+# Additional documentation
+[Temporal Cookbook](https://vertexinc.atlassian.net/wiki/spaces/CSA/pages/4808048923/Integration+Platform+Services+-+Temporal+Cookbook)
