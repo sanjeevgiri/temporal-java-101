@@ -25,6 +25,16 @@ public class HelloWorkflowWorker {
     WorkerFactory factory = WorkerFactory.newInstance(client);
     Worker worker = factory.newWorker("greeting-tasks");
     worker.registerWorkflowImplementationTypes(HelloWorkflowWorkflowImpl.class);
-    factory.start();
+    factory.start(); // Start listening to the Task Queue
+
+    // Alternative to temporal CLI, workflow can be started using the temporal Java SDK
+    //    WorkflowOptions options = WorkflowOptions.newBuilder()
+    //      .setWorkflowId("my-first-workflow")
+    //      .setTaskQueue("greeting-tasks")
+    //      .build();
+    //    HelloWorkflowWorkflow workflow = client.newWorkflowStub(HelloWorkflowWorkflow.class, options);
+    //    String greeting = workflow.greetSomeone(args[0]);
+    //    String workflowId = WorkflowStub.fromTyped(workflow).getExecution().getWorkflowId();
+    //    System.out.println(workflowId + " " + greeting);
   }
 }
