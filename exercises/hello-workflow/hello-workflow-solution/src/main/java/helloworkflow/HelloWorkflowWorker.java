@@ -26,6 +26,5 @@ public class HelloWorkflowWorker {
     Worker worker = factory.newWorker("greeting-tasks");
     worker.registerWorkflowImplementationTypes(HelloWorkflowWorkflowImpl.class);
     factory.start();
-
   }
 }
