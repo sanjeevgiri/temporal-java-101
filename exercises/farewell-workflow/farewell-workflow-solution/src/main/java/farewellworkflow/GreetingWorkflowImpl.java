@@ -28,14 +28,10 @@ public class GreetingWorkflowImpl implements GreetingWorkflow {
     String spanishGreeting = activities.greetInSpanish(name);
     String spanishFarewell = activities.farewellInSpanish(name);
 
-    for(int i=0; i<100000; i++) {
-     // try {
-        // Workflow.sleep(1000);
-//      } catch (InterruptedException e) {
-//        e.printStackTrace();
-//      }
-      System.out.println("Workflow is running");
-    }
+
+//    for (int i = 0; i < 100000; i++) {
+//      System.out.println("Workflow is running");
+//    }
 
     return "\n" + spanishGreeting + "\n" + spanishFarewell;
   }

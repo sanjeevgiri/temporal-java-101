@@ -1,6 +1,5 @@
 package farewellworkflow;
 
-import io.temporal.api.enums.v1.WorkflowIdConflictPolicy;
 import io.temporal.api.enums.v1.WorkflowIdReusePolicy;
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowClientOptions;
@@ -20,19 +19,22 @@ public class Starter {
       .setRetryOptions(RetryOptions.newBuilder()
         .setMaximumAttempts(1)
         .build())
-      .setWorkflowId("greeting-workflow-b1")
+      .setWorkflowId("greeting-workflow-b3")
       .setTaskQueue("greeting-tasks-with-activities")
       .setWorkflowIdReusePolicy(WorkflowIdReusePolicy.WORKFLOW_ID_REUSE_POLICY_REJECT_DUPLICATE)
-      //.setWorkflowIdConflictPolicy(WorkflowIdConflictPolicy.WORKFLOW_ID_CONFLICT_POLICY_FAIL)
       .build();
 
-    GreetingWorkflow workflow = client.newWorkflowStub(GreetingWorkflow.class, options);
+    GreetingWorkflow workflow = client
+      .newWorkflowStub(GreetingWorkflow.class, options);
 
-    String greeting = workflow.greetSomeone(args[0]);
+    try {
+      String greeting = workflow.greetSomeone(args[0]);
+      String workflowId = WorkflowStub.fromTyped(workflow).getExecution().getWorkflowId();
+      System.out.println(workflowId + " " + greeting);
+    } catch (Throwable throwable) {
+      System.out.println("Workflow failed: perform cleanup ... ack with error.." + throwable.getMessage());
+    }
 
-    String workflowId = WorkflowStub.fromTyped(workflow).getExecution().getWorkflowId();
-
-    System.out.println(workflowId + " " + greeting);
     System.exit(0);
   }
 }

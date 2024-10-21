@@ -11,8 +11,8 @@ public class GreetingActivitiesImpl implements GreetingActivities {
 
     @Override
     public String greetInSpanish(String name) {
-        throw new RuntimeException("fail");
-        // return callService("get-spanish-greeting", name);
+        // throw new RuntimeException("fail");
+        return callService("get-spanish-greeting", name);
     }
 
     @Override
