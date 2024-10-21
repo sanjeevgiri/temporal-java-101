@@ -8,7 +8,7 @@ import java.time.Duration;
 public class GreetingWorkflowImpl implements GreetingWorkflow {
 
   Integer initialInterval = 15;
-  Integer maxAttempts = 100;
+  Integer maxAttempts = 2;
   RetryOptions retryOptions = RetryOptions.newBuilder()
     .setInitialInterval(Duration.ofSeconds(initialInterval))
     .setBackoffCoefficient(2)
@@ -27,6 +27,15 @@ public class GreetingWorkflowImpl implements GreetingWorkflow {
   public String greetSomeone(String name) {
     String spanishGreeting = activities.greetInSpanish(name);
     String spanishFarewell = activities.farewellInSpanish(name);
+
+    for(int i=0; i<100000; i++) {
+     // try {
+        // Workflow.sleep(1000);
+//      } catch (InterruptedException e) {
+//        e.printStackTrace();
+//      }
+      System.out.println("Workflow is running");
+    }
 
     return "\n" + spanishGreeting + "\n" + spanishFarewell;
   }

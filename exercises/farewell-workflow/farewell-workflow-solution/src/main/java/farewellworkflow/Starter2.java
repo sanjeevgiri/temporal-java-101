@@ -1,0 +1,34 @@
+package farewellworkflow;
+
+import io.temporal.api.enums.v1.WorkflowIdConflictPolicy;
+import io.temporal.api.enums.v1.WorkflowIdReusePolicy;
+import io.temporal.client.WorkflowClient;
+import io.temporal.client.WorkflowClientOptions;
+import io.temporal.client.WorkflowOptions;
+import io.temporal.client.WorkflowStub;
+import io.temporal.serviceclient.WorkflowServiceStubs;
+
+public class Starter2 {
+    public static void main(String[] args) throws Exception {
+
+        WorkflowServiceStubs service = WorkflowServiceStubs.newLocalServiceStubs();
+
+        WorkflowClient client = WorkflowClient.newInstance(service, WorkflowClientOptions.newBuilder().setNamespace("ips").build());
+
+        WorkflowOptions options = WorkflowOptions.newBuilder()
+          .setWorkflowId("greeting-workflow-a2")
+          .setTaskQueue("greeting-tasks-with-activities")
+          .setWorkflowIdReusePolicy(WorkflowIdReusePolicy.WORKFLOW_ID_REUSE_POLICY_REJECT_DUPLICATE)
+          //.setWorkflowIdConflictPolicy(WorkflowIdConflictPolicy.WORKFLOW_ID_CONFLICT_POLICY_USE_EXISTING)
+          .build();
+
+        GreetingWorkflow workflow = client.newWorkflowStub(GreetingWorkflow.class, options);
+
+        String greeting = workflow.greetSomeone(args[0]);
+
+        String workflowId = WorkflowStub.fromTyped(workflow).getExecution().getWorkflowId();
+
+        System.out.println(workflowId + " " + greeting);
+        System.exit(0);
+    }
+}
