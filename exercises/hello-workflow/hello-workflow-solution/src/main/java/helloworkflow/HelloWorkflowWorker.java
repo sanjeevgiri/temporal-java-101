@@ -5,6 +5,7 @@ import io.temporal.client.WorkflowClientOptions;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.worker.Worker;
 import io.temporal.worker.WorkerFactory;
+import io.temporal.worker.WorkflowImplementationOptions;
 
 public class HelloWorkflowWorker {
 
@@ -25,6 +26,7 @@ public class HelloWorkflowWorker {
     WorkerFactory factory = WorkerFactory.newInstance(client);
     Worker worker = factory.newWorker("greeting-tasks");
     worker.registerWorkflowImplementationTypes(HelloWorkflowWorkflowImpl.class);
+
     factory.start(); // Start listening to the Task Queue
 
     // Alternative to temporal CLI, workflow can be started using the temporal Java SDK
